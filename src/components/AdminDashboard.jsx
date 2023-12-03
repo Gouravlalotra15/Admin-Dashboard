@@ -65,6 +65,7 @@ const AdminData = () => {
   useEffect(() => {
     const filteredUsersCount = filteredUsers.length;
     const newTotalPage = Math.ceil(filteredUsersCount / 10);
+    setPage(1);
     setTotalpage(newTotalPage);
   }, [search]);
 
