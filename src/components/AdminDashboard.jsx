@@ -9,7 +9,7 @@ const AdminData = () => {
   const [page, setPage] = useState(1);
 
   //custoum hooks call
-  const { users, setUsers, totalpage } = useFetchData();
+  const { users, setUsers, totalpage, setTotalpage } = useFetchData();
 
   const [isPageSelected, setIsPageSelected] = useState(
     new Array(totalpage).fill(false)
@@ -50,8 +50,10 @@ const AdminData = () => {
     });
     setUsers(newUsers);
   };
+
   const filteredUsers = users.filter((user) => {
     const searchTerm = search.toLowerCase();
+    console.log(searchTerm);
     if (
       user.name.toLowerCase().startsWith(searchTerm) ||
       user.email.toLowerCase().startsWith(searchTerm) ||
@@ -60,6 +62,11 @@ const AdminData = () => {
       return user;
   });
   console.log(filteredUsers);
+  useEffect(() => {
+    const filteredUsersCount = filteredUsers.length;
+    const newTotalPage = Math.ceil(filteredUsersCount / 10);
+    setTotalpage(newTotalPage);
+  }, [search]);
 
   const handleDelete = () => {
     setUsers(
@@ -91,20 +98,11 @@ const AdminData = () => {
   const leftclick = (page) => {
     if (page <= 1) return;
     setPage(page - 1);
-    // const newData = users.slice(startPageIndex, endPageIndex).map((item) => {
-    //   return { ...item, checked: false };
-    // });
-    // setUsers(newData);
   };
 
   const rightclick = (page) => {
     if (page >= totalpage) return;
     setPage(page + 1);
-
-    // const newData = users.slice(startPageIndex, endPageIndex).map((item) => {
-    //   return { ...item, checked: false };
-    // });
-    // setUsers(newData);
   };
 
   return (

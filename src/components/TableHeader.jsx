@@ -6,7 +6,7 @@ const TableHeader = ({
   page,
 }) => {
   return (
-    <div className="user">
+    <div className="user tableHeader">
       <input
         type="checkbox"
         checked={isPageSelected[page]}
