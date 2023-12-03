@@ -34,7 +34,8 @@ const AdminData = () => {
   }, [isPageSelected]);
 
   // delete a user
-  const handleDel = (id) => {
+  const handleDel = (id, e) => {
+    e.stopPropagation();
     const newUsers = users.filter((item) => {
       return item.id !== id;
     });
@@ -53,7 +54,7 @@ const AdminData = () => {
 
   const filteredUsers = users.filter((user) => {
     const searchTerm = search.toLowerCase();
-    console.log(searchTerm);
+
     if (
       user.name.toLowerCase().startsWith(searchTerm) ||
       user.email.toLowerCase().startsWith(searchTerm) ||
@@ -61,7 +62,7 @@ const AdminData = () => {
     )
       return user;
   });
-  console.log(filteredUsers);
+
   useEffect(() => {
     const filteredUsersCount = filteredUsers.length;
     const newTotalPage = Math.ceil(filteredUsersCount / 10);
@@ -77,7 +78,8 @@ const AdminData = () => {
     );
   };
 
-  const handleSave = (id, name, mail, role) => {
+  const handleSave = (id, name, mail, role, e) => {
+    e.stopPropagation();
     const newEditedName = filteredUsers.map((item) => {
       if (item.id == id) {
         item.name = name;
@@ -157,7 +159,7 @@ const AdminData = () => {
           })}
           <span
             onClick={() => rightclick(page)}
-            className={page == totalpage ? "no-class" : ""}
+            className={page == totalpage || totalpage == 0 ? "no-class" : ""}
           >
             ▶
           </span>
